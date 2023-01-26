@@ -27,16 +27,18 @@ describe('Broken Sauce', function () {
         // If you see a German or English GDPR modal on google.com you 
         // will have to code around that or use the us-west-1 datacenter.
         // You can investigate the modal elements using a Live Test(https://app.saucelabs.com/live/web-testing)
-
-
-        let search = await driver.findElement(By.name("q"));
+	
+		
+        let search = await driver.findElement(By.name("q")); 	// Rename the name from Search to q
         await search.sendKeys("Sauce Labs");
         
         let button = await driver.findElement(By.name("btnK"))
         await button.click()
 
-        let page = await driver.findElement(By.partialLinkText("sauce"));
 
+        let page = await driver.findElement(By.partialLinkText("sauce"));
+		page.click()		//click the sauce page 
+		
         await driver.quit();
         } catch (err) {
             // hack to make this pass for Gitlab CI
