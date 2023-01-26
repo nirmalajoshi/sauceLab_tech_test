@@ -29,17 +29,27 @@ describe('Broken Sauce', function () {
         // You can investigate the modal elements using a Live Test(https://app.saucelabs.com/live/web-testing)
 	
 		
-        let search = await driver.findElement(By.name("q")); 	// Rename the name from Search to q
-        await search.sendKeys("Sauce Labs");
-        
-        let button = await driver.findElement(By.name("btnK"))
-        await button.click()
+	   let search = await driver.findElement(By.name("q"));    //replace correct name q instead of Search
+       await search.sendKeys("Sauce Labs");
+      
+       let button = await driver.findElement(By.name("btnK"))
+       await button.click()
 
 
-        let page = await driver.findElement(By.partialLinkText("sauce"));
-		page.click()		//click the sauce page 
-		
-        await driver.quit();
+       let page = await driver.findElement(By.partialLinkText("sauce"));
+       await page.click()        // add page click action
+      
+       // finding menu/submenu element locations
+       let docElement = driver.findElement(By.css("#headerMainNav > div > nav > ul > li.nav-menu-list-container > ul:nth-child(2) > li:nth-child(4) > div.nav-menu > div > a"));
+       let submenu = driver.findElement(By.css("#headerMainNav > div > nav > ul > li.nav-menu-list-container > ul:nth-child(2) > li:nth-child(4) > div.nav-menu-link-group-row-list-wrapper > div > div > div > ul > li:nth-child(2) > div > ul > li > div > ul > li:nth-child(1) > div > ul > li > ul > li:nth-child(1) > a > span"));
+      
+       //performing action to reach doc page
+       await driver.actions().move({origin:docElement}).move({origin:submenu}).click().perform();
+     
+       //close browswer session
+       await driver.quit();
+	   
+
         } catch (err) {
             // hack to make this pass for Gitlab CI
             // candidates can ignore this
